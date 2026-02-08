@@ -2,7 +2,6 @@ import os
 from flask import Flask, render_template, request, jsonify, session, redirect
 from supabase import create_client, Client
 
-# Tell Flask the templates are in the root templates folder
 app = Flask(__name__, template_folder='../templates', static_folder='../static')
 app.secret_key = os.environ.get('SECRET_KEY', 'pogi_si_gm_default')
 
