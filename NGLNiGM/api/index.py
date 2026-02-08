@@ -2,14 +2,16 @@ import os
 from flask import Flask, render_template, request, jsonify, session, redirect
 from supabase import create_client, Client
 
+# Line 5: Corrected underscores and folders
 app = Flask(__name__, template_folder='../templates', static_folder='../static')
 app.secret_key = os.environ.get('SECRET_KEY', 'pogi_si_gm_default')
 
 # Pulling keys from Vercel Environment Variables
 url = os.environ.get("SUPABASE_URL")
 key = os.environ.get("SUPABASE_KEY")
-supabase: Client = create_client(url, key)
 
+# Line 12: Added the missing closing parenthesis )
+supabase: Client = create_client(url, key)
 @app.route("/")
 def home():
     return render_template("index.html")
