@@ -1,5 +1,0 @@
-flask
-supabase
-postgrest
-httpx
-gotrue==1.3.1
