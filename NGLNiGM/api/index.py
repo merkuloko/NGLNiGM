@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, request, jsonify, session, redirect
 from supabase import create_client, Client
 
-# Line 5: Corrected underscores and folders
+# Fixed: __name__ has TWO underscores on each side
 app = Flask(__name__, template_folder='../templates', static_folder='../static')
 app.secret_key = os.environ.get('SECRET_KEY', 'pogi_si_gm_default')
 
@@ -10,8 +10,9 @@ app.secret_key = os.environ.get('SECRET_KEY', 'pogi_si_gm_default')
 url = os.environ.get("SUPABASE_URL")
 key = os.environ.get("SUPABASE_KEY")
 
-# Line 12: Added the missing closing parenthesis )
+# Fixed: Added the missing closing parenthesis ) at the end
 supabase: Client = create_client(url, key)
+
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -23,12 +24,11 @@ def send_message():
         return jsonify({"status": "error", "message": "No message provided"}), 400
 
     try:
-        # Saving to Supabase Cloud instead of local SQLite
+        # Saving to Supabase
         supabase.table("anonymous_messages").insert({"content": message_content}).execute()
         return jsonify({"status": "success"}), 200
     except Exception as e:
-        print(f"Supabase Error: {e}")
-        return jsonify({"status": "error", "message": "Database connection failed"}), 500
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route("/view-messages-99")
 def view_messages():
@@ -45,7 +45,7 @@ def view_messages():
         response = supabase.table("anonymous_messages").select("*").order("timestamp", desc=True).execute()
         return render_template("admin.html", messages=response.data)
     except Exception as e:
-        return f"Error fetching messages: {e}"
+        return f"Error: {e}"
 
 @app.route("/admin-login", methods=["POST"])
 def admin_login():
@@ -53,7 +53,3 @@ def admin_login():
         session['admin_logged_in'] = True
         return redirect("/view-messages-99")
     return "Mali password! <a href='/view-messages-99'>Try again</a>"
-
-# Vercel handles the running, but this is kept for local testing
-if __name__ == "__main__":
-    app.run(port=5000, debug=True)
