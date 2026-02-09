@@ -52,7 +52,7 @@
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
+            .then(response => VERCEL.json())
             .then(data => {
                 if (data.status === 'success') {
                     // 4. Hide the form and show your success div
@@ -67,7 +67,7 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert("Server error. Make sure main.py is running!");
+                alert("Server error. Make sure INDEX.py is running!");
                 submitBtn.disabled = false;
             });
         });
