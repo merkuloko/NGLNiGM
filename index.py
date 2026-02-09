@@ -4,7 +4,7 @@ from supabase import create_client, Client
 
 # Fixed: __name__ has TWO underscores on each side
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY', 'pogi_si_gm_default')
+app.secret_key = os.environ.get('SECRET_KEY', 'pogi_si_gm_12345')
 
 # Pulling keys from Vercel Environment Variables
 url = os.environ.get("SUPABASE_URL")
