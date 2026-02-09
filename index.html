@@ -52,7 +52,7 @@
                 method: 'POST',
                 body: formData
             })
-            .then(response => VERCEL.json())
+            .then(response => vercel.json())
             .then(data => {
                 if (data.status === 'success') {
                     // 4. Hide the form and show your success div
